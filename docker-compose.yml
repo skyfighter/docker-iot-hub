@@ -1,0 +1,34 @@
+version: '2'
+
+services:
+#Node-Red 
+   nodered:
+     image: nodered/node-red-docker
+     environment:
+       - SERVICE_NAME=node-red
+     ports:
+       - "1888:1880"
+     volumes:
+       - /home/user/iot/node-red-com:/data 
+       - /home/user/iot/sqlite:/db        
+
+# phpliteadmin    
+   pmalite:
+     image: acttaiwan/phpliteadmin
+     ports:
+       - "2015:2015"
+     volumes:
+       - /home/user/iot/sqlite:/db
+
+# eclipse-mosquitto
+   mqtt:
+     image: eclipse-mosquitto
+     environment:
+       - SERVICE_NAME=mqtt-mosquitto
+     ports:
+       - "8883:8883"
+     volumes:
+       - /home/user/iot/mqtt/config:/etc/mosquitto
+       - /home/user/iot/mqtt/log:/mqtt/log 
+       - /home/user/iot/mqtt/data:/mqtt/data   
+
